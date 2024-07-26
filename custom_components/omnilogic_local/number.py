@@ -60,7 +60,7 @@ async def async_setup_entry(hass: HomeAssistant, entry: ConfigEntry, async_add_e
             case FilterType.VARIABLE_SPEED:
                 entities.append(OmniLogicFilterNumberEntity(coordinator=coordinator, context=system_id))
 
-    all_heaters = get_entities_of_hass_type(coordinator.data, "water_heater")
+    all_heaters = get_entities_of_hass_type(coordinator.data, "climate")
     solar_heaters = {
         system_id: data
         for system_id, data in all_heaters.items()
