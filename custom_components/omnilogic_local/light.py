@@ -39,9 +39,14 @@ def to_omni_level(level: int) -> int:
     return int(round((level * 4) / 255))
 
 
-def to_hass_level(level: ColorLogicBrightness) -> int:
+def to_hass_level(level: Any) -> int:
     """Convert the given OmniLogic (0-4) light level to Home Assistant (0-255)."""
-    return int(int(level.value * 255) // 4)
+    if isinstance(level, ColorLogicBrightness):
+        return int(int(level.value * 255) // 4)
+    elif isinstance(level, int):
+        return int(int(level * 255) // 4)
+    else:
+        raise TypeError("Expected level to be an instance of ColorLogicBrightness or int")
 
 
 async def async_setup_entry(hass: HomeAssistant, entry: ConfigEntry, async_add_entities: AddEntitiesCallback) -> None:
